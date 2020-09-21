@@ -1,2 +1,179 @@
-# weekly
+
 腾讯体育前端团队每周精华推荐
+
+
+## 20200918
+### 1. [浅析鸿蒙 JavaScript GUI 技术栈](https://juejin.im/post/6872154561574862855)
+
+开发者只需编写形如 Vue 组件式的 JavaScript 业务逻辑，即可将其渲染为智能手表等嵌入式硬件上的 UI 界面
+
+* JS 框架层(JS Framework)，可理解为一个大幅简化的 Vue 式 JavaScript 框架
+* JS 引擎与运行时层(engine & runtime)，可理解为一个大幅简化的 WebKit 式运行时
+* 图形渲染层(render)，可理解为一个大幅简化的 Skia 式图形绘制库
+
+#### JS 框架层(JS Framework)
+
+ HML（类 XML）：
+
+```html
+<!— hello.hml —>
+<text onclick=“boil”>{{hello}}</text>
+```
+
+ JavaScript：
+
+```js
+export default {
+  data: {
+    hello: ‘PPT’
+  },
+  boil() {
+    this.hello = ‘核武器’;
+  }
+}
+```
+
+* XML 预处理
+* 事件的注册和触发
+* 数据劫持机制
+* UI 控件的更新
+
+Ast 转换成语法树（数据），底层根据语法树执行相应操作，渲染text原生组件，通过底层（C++）把事件注册好，js中数据劫持后，通知底层实现UI的更新渲染。
+
+#### JS 引擎与运行时层(engine & runtime)
+
+* JS 引擎选择了  [JerryScript](https://en.wikipedia.org/wiki/JerryScript) ，负责解析理解js语言。
+* 每种形如 `<text>` 和 `<div>` 的 XML 标签组件，都对应一个绑定到 JerryScript 上的 C++ Component 类，如 TextComponent 和 DivComponent 等，类似DOM。
+* 除 UI 原生对象外，还有一系列在 JS 中以 @system 为前缀的 built-in 模块，它们提供了 JS 中可用的 Router / Audio / File 等平台能力，类似APP的JSAPI.
+
+#### 图形渲染层(render)
+
+* 图形库提供了 UIView 这个 C++ 控件基类，其中有一系列形如 OnClick / OnLongPress / OnDrag 的虚函数。基本每种 JS 中可用的原生 Component 类，都对应于一种 UIView 的子类。
+* 除了各种定制化 View 之外，它还开放了一系列形如 DrawLine / DrawCurve / DrawText 等命令式的绘制方法。
+* 这个图形库具备名为 GFX 的 GPU 加速模块，但它目前似乎只有象征性的 FillArea 矩形单色填充能力。
+
+Demo中UI层更新过程：
+
+1. JS 中执行 this.hello = ‘PPT’ 之类的代码，触发依赖追踪。
+2. JS 依赖追踪回调触发原生函数，更新 C++ 的 Component 组件状态。
+3. Component 更新其绑定的 UIView 子类状态，触发图形库更新。
+4. 图形库更新内存中的像素状态，完成绘制。
+
+#### 目前缺点：
+
+JS 框架层
+
+* 没有基本的组件间通信（如 props / emit 等）能力
+* 没有基本的自定义组件能力
+* 没有除基础依赖追踪以外的状态管理能力
+JS 引擎与运行时层
+* 标准支持过低，无法运行 Vue 3.0 这类需 Proxy 的下一代前端框架
+* 性能水平弱，难以支持中大型 JS 应用
+* 没有开放 DOM 式的对象模型 API，不利于上层抹平差异
+图形渲染层
+* 没有实质可用的 GPU 加速
+* 没有 SVG 和富文本等高级渲染能力
+* Canvas 完成度低，缺状态栈和很多 API
+
+扩展阅读：
+[800万行代码的鸿蒙系统，在世界上处于什么水平？
+](https://zhuanlan.zhihu.com/p/245611603)
+
+### 2. [逐行分析鸿蒙系统的 JavaScript 框架](https://juejin.im/post/6872639403102208014)
+
+*关键词：华为鸿蒙 JavaScript 框架*
+
+[OpenHarmony: OpenHarmony是开放原子开源基金会（OpenAtom Foundation）旗下开源项目，定位是一款面向全场景的开源分布式操作系统，第一个版本支持128K-128M设备上运行。](https://gitee.com/openharmony)
+
+代码结构如下：
+
+```text
+src
+├── __test__
+│   └── index.test.js
+├── core
+│   └── index.js
+├── index.js
+├── observer
+│   ├── index.js
+│   ├── observer.js
+│   ├── subject.js
+│   └── utils.js
+└── profiler
+    └── index.js
+```
+
+实现了一个观察者模式
+
+![jsframework](https://git.code.oa.com/omgweb/weekly-conf/raw/67aa563248736e5fc18e599165016a2660d02207/assets/images/jsframework.png)
+
+
+### 3. [尤雨溪：TypeScript 不会取代 JavaScript](https://www.infoq.cn/article/9u1y1yfeocsTpSxQZyrm)
+
+关键词：typescript，javascript
+
+> 管理好前端框架项目，最重要的还是了解用户、设计出合理的 API、建立技术社区并长期维护项目承诺
+
+> 编写所谓“平平无奇却易于理解”的代码没什么不好，我不太认同这话里隐藏的那种贬义倾向。实际上，编写出这样的代码也需要一定经验，而且好代码的核心在于执行效率高，而不是令人拍案称奇的实现思路
+
+> 务实的态度——先开始做事，哪怕做得不好
+
+> 请一定认真思考这个问题：怎么才能更好地拆分与解耦内部模块
+
+> JS 与 TS（带类型的超集）并行发展才是最合理的未来方向，而且这一点在可预见的未来不会改变。
+
+> 只有在项目起步时就在代码编写与 API 设计中考虑到摇树(tree shaking)机制，才能保证摇树拥有最好的效果
+
+7分钟
+
+### 4. [五分钟了解 Node.js Shebang](https://www.infoq.cn/article/rUHAGZscuW571soKUkVy)
+
+关键词：nodejs 命令行
+
+Shebang 或 hashbang（#! 代码的英文发音）是文件的第一行，它告诉 OS 使用哪个解释器。Shebang 是一项操作系统特性，可用于运行任何解释语言：Python、Perl 等。
+
+```shell
+#!/absolute/path/to/the/interpreter [optional params]
+```
+
+#### 关于 env
+
+```shell
+#!/usr/bin/env node
+```
+
+env 主要用于在修改后的环境（设置了环境变量）中运行**命令**，“命令”可以是 PATH 上的任何内容。
+
+env的一些技巧,  `-S`
+
+* 传参  
+* 设置环境变量
+* 。。。
+
+### 5. [什么是 “内卷化效应” ？](https://zhuanlan.zhihu.com/p/161625980)
+
+在某些特殊的局面当中，尽管每一个局内人都在努力争取自己的利益，但是这些人越是努力，造成的无谓损耗越大，大家的整体利益却没有得到提升。
+
+农民在有限的土地上精耕细作，不断加大劳动投入。但土地带来的粮食产量增长，却远远小于劳动量的增加。
+同一届的高三学生，每个人都拼命刷题，牺牲了素质教育和娱乐的时间。但名校只有那么几所，即使考生们再怎么刻苦，能考上名校的学生数量还是不变的。
+在同一个行业里，所有员工都努力加班，但整个消费市场就那么大。尽管每个人都累到脱发，员工们也不会变得更加成功。
+
+附： [囚徒困境](https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653199445&idx=1&sn=e97d1d4b81a1729c07c3c6a0d4dc04d5&chksm=8c99ee8fbbee6799d77c37dc659e52c7d09e5f6395714cc32e11744259526102567d8049146e&scene=21#wechat_redirect)
+
+### 快讯
+
+* Deno 1.4.0 发布 https://www.oschina.net/news/118605/deno-1-4-0-released
+* 云上加州：https://www.infoq.cn/article/ZEbWBgkCdLq5uFwdtd0l
+* 如何看待 2020 年 9 月 16 日苹果发布会发布的新版 iPad Air https://www.zhihu.com/question/421334161/answer/1475430073
+* 微软从水里捞起了一个数据中心：存储效果更好，故障率仅陆上1/8 https://zhuanlan.zhihu.com/p/245536324
+* https://zhuanlan.zhihu.com/p/231558452
+* https://twitter.com/iansu/status/1306375307553693697
+
+### github推荐
+
+* https://github.com/janodvarko/harviewer
+* https://github.com/typescript-eslint/typescript-eslint
+* https://github.com/microsoft/redux-dynamic-modules
+
+
+
