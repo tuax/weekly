@@ -3,6 +3,7 @@
 
 
 ## 20200918
+
 ### 1. [浅析鸿蒙 JavaScript GUI 技术栈](https://juejin.im/post/6872154561574862855)
 
 开发者只需编写形如 Vue 组件式的 JavaScript 业务逻辑，即可将其渲染为智能手表等嵌入式硬件上的 UI 界面
@@ -105,7 +106,7 @@ src
 
 实现了一个观察者模式
 
-![jsframework](https://git.code.oa.com/omgweb/weekly-conf/raw/67aa563248736e5fc18e599165016a2660d02207/assets/images/jsframework.png)
+![企业微信截图_c34fef23ce4b4fc68fcd48fedb479118.png](https://tuateam-1258669292.cos.ap-beijing.myqcloud.com/企业微信截图_c34fef23-ce4b-4fc6-8fcd-48fedb479118.png)
 
 
 ### 3. [尤雨溪：TypeScript 不会取代 JavaScript](https://www.infoq.cn/article/9u1y1yfeocsTpSxQZyrm)
