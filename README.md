@@ -7,4 +7,5 @@
 * [2020-10-10技术周刊](https://github.com/tuateam/weekly/blob/master/20201010.md)
 * [2020-10-23技术周刊](https://github.com/tuateam/weekly/blob/master/20201023.md)
 * [2020-11-06技术周刊](https://github.com/tuateam/weekly/blob/master/20201106.md)
+* [2020-11-20技术周刊](https://github.com/tuateam/weekly/blob/master/20201120.md)
 * [2020-11-27技术周刊](https://github.com/tuateam/weekly/blob/master/20201127.md)
