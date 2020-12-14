@@ -9,3 +9,4 @@
 * [2020-11-06技术周刊](https://github.com/tuateam/weekly/blob/master/20201106.md)
 * [2020-11-20技术周刊](https://github.com/tuateam/weekly/blob/master/20201120.md)
 * [2020-11-27技术周刊](https://github.com/tuateam/weekly/blob/master/20201127.md)
+* [2020-12-04技术周刊](https://github.com/tuateam/weekly/blob/master/20201204.md)
