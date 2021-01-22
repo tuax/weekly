@@ -14,4 +14,5 @@
 
 ## 2021年度
 * [2021-01-08技术周刊](https://github.com/tuateam/weekly/blob/master/20210108.md)
+* [2021-01-15技术周刊](https://github.com/tuateam/weekly/blob/master/20210115.md)
 
